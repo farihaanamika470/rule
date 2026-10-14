@@ -60,7 +60,7 @@
         "server": "local"
       },
       {
-        "rule_set": "geosite_private",
+        "rule_set": "geosite-private",
         "server": "local"
       },
       {
@@ -87,29 +87,29 @@
       },
       {
         "rule_set": [
-          "apple_domain",
+          "apple-domain",
           "cn_domain",
-          "bilibili_domain"
+          "bilibili-domain"
         ],
         "server": "ali"
       },
       {
         "rule_set": [
-          "google_domain",
-          "youtube_domain",
-          "proxy_domain",
-          "category_porn"
+          "google-domain",
+          "youtube-domain",
+          "proxy-domain",
+          "category-porn"
         ],
         "server": "googleDNS"
       },
       {
         "rule_set": [
-          "openai_domain",
-          "cloudflare_domain",
-          "claude_domain",
-          "copilot_domain",
-          "twitter_domain",
-          "telegram_domain"
+          "openai-domain",
+          "cloudflare-domain",
+          "claude-domain",
+          "copilot-domain",
+          "twitter-domain",
+          "telegram-domain"
         ],
         "server": "cfDNS"
       }
