@@ -5,11 +5,10 @@
   },
   "http_clients": [
     {
-      "tag": "dl-client",
-      "detour": "DIRECT"
+      "tag": "dl-client"
     }
   ],
-    "endpoints": [
+  "endpoints": [
     {
       "type": "tailscale",
       "tag": "ts-ep",
@@ -153,11 +152,11 @@
   ],
   "outbounds": [
     {
-  "type": "selector",
-  "tag": "ALL",
-  "outbounds": ["AUTO"],
-  "default": "AUTO"
-},
+      "type": "selector",
+      "tag": "ALL",
+      "outbounds": ["AUTO"],
+      "default": "AUTO"
+    },
     {
       "type": "selector",
       "tag": "GLOBAL",
@@ -676,8 +675,7 @@
       "external_controller": "0.0.0.0:9090",
       "external_ui": "ui",
       "external_ui_download_url": "https://ghproxy.net/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
-      "external_ui_download_detour": "DIRECT",
-      "default_mode": "规则",
+      "default_mode": "rule",
       "access_control_allow_origin": "*",
       "access_control_allow_private_network": true
     }
