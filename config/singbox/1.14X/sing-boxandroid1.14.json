@@ -26,7 +26,7 @@
       {"tag": "local", "type": "local", "prefer_go": true},
       {"tag": "ali", "type": "https", "server": "223.5.5.5"},
       {"tag": "tx", "type": "https", "server": "doh.pub", "domain_resolver": "hosts"},
-      {"tag": "google", "type": "https", "server": "8.8.8.8", "detour": "默认代理"},
+      {"tag": "google", "type": "https", "server": "8.8.8.8", "detour": "PROXY"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"},
       {"type": "hosts", "tag": "hosts", "predefined": {"doh.pub": ["1.12.12.21", "120.53.53.53"]}}
     ],
@@ -487,7 +487,7 @@
       {"rule_set": "geosite-category-cryptocurrency", "outbound": "Wallet"},
       {"rule_set": "geosite-steam@cn", "outbound": "直连"},
       {"rule_set": "geosite-steam", "outbound": "Steam"},
-      {"rule_set": "geosite-geolocation-!cn", "outbound": "默认代理"},
+      {"rule_set": "geosite-geolocation-!cn", "outbound": "PROXY"},
       {"inbound": "mixed-in", "action": "resolve"},
       {"rule_set": "geoip-telegram", "outbound": "Telegram"},
       {"rule_set": "geoip-cn", "outbound": "直连"}
