@@ -21,7 +21,7 @@
       "advertise_exit_node": true
     }
   ],
-  "dns": {
+"dns": {
     "servers": [
       {
         "type": "fakeip",
@@ -534,7 +534,7 @@
       "tag": "DIRECT"
     }
   ],
-  "route": {
+"route": {
     "rules": [
       {
         "ip_cidr": [
@@ -624,7 +624,7 @@
         "tag": [
           "geosite-private", "geosite-apple", "geosite-bilibili", "geosite-cn", 
           "geosite-google", "geosite-netflix", "geosite-github", "geosite-cloudflare", 
-          "geosite-telegram", "geosite-youtube", "geosite-openai", "geosite-gemini", 
+          "geosite-telegram", "geosite-youtube", "geosite-openai", 
           "geosite-category-porn", "geosite-geolocation-!cn"
         ],
         "type": "remote",
@@ -632,16 +632,41 @@
         "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"
       },
       {
+        "tag": "geosite-gemini",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google-gemini.srs"
+      },
+      {
         "tag": [
-          "geoip-cn", "geoip-google", "geoip-telegram", "geoip-netflix", 
-          "geoip-apple", "geoip-cloudflare"
+          "geoip-cn", "geoip-google", "geoip-telegram"
         ],
         "type": "remote",
         "format": "binary",
         "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/{tag}.srs"
       },
       {
-        "tag": ["Claude", "Copilot", "Twitter", "TikTok", "Spotify", "OneDrive"],
+        "tag": "geoip-apple",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geoip/apple.srs"
+      },
+      {
+        "tag": "geoip-netflix",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geoip/netflix.srs"
+      },
+      {
+        "tag": "geoip-cloudflare",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geoip/cloudflare.srs"
+      },
+      {
+        "tag": [
+          "Claude", "Copilot", "Twitter", "TikTok", "Spotify", "OneDrive"
+        ],
         "type": "remote",
         "format": "binary",
         "url": "https://gh-proxy.com/https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/{tag}/{tag}.srs"
