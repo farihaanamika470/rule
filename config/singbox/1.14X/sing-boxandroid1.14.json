@@ -60,7 +60,7 @@
         "server": "local"
       },
       {
-        "rule_set": "private_domain",
+        "rule_set": "geosite_private",
         "server": "local"
       },
       {
