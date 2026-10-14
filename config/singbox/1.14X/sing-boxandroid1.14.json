@@ -221,7 +221,7 @@
     {
       "type": "urltest",
       "tag": "AUTO",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://cp.cloudflare.com/generate_204",
       "interval": "15m0s",
       "tolerance": 50,
@@ -230,7 +230,7 @@
     {
       "type": "urltest",
       "tag": "AI-plus",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://cp.cloudflare.com/generate_204",
       "interval": "12m0s",
       "tolerance": 50
@@ -238,7 +238,7 @@
     {
       "type": "urltest",
       "tag": "OpenAI",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://cp.cloudflare.com/generate_204",
       "interval": "14m0s",
       "tolerance": 50
@@ -246,7 +246,7 @@
     {
       "type": "urltest",
       "tag": "Gemini",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.google.com/generate_204",
       "interval": "13m0s",
       "tolerance": 50
@@ -254,7 +254,7 @@
     {
       "type": "urltest",
       "tag": "Youtube",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "16m0s",
       "tolerance": 50
@@ -262,7 +262,7 @@
     {
       "type": "urltest",
       "tag": "CF优选",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://cp.cloudflare.com/generate_204",
       "interval": "8m0s",
       "tolerance": 50
@@ -270,7 +270,7 @@
     {
       "type": "urltest",
       "tag": "TIKTOK-US",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "31m0s",
       "tolerance": 50,
@@ -279,7 +279,7 @@
     {
       "type": "urltest",
       "tag": "TIKTOK-JP",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "32m0s",
       "tolerance": 50,
@@ -288,7 +288,7 @@
     {
       "type": "urltest",
       "tag": "TIKTOK-VN",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "33m0s",
       "tolerance": 50,
@@ -297,7 +297,7 @@
     {
       "type": "urltest",
       "tag": "TIKTOK-SG",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "34m0s",
       "tolerance": 50,
@@ -306,7 +306,7 @@
     {
       "type": "urltest",
       "tag": "TIKTOK-TW",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "34m10s",
       "tolerance": 50,
@@ -315,7 +315,7 @@
     {
       "type": "urltest",
       "tag": "HK AUTO",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "30m0s",
       "tolerance": 50,
@@ -324,7 +324,7 @@
     {
       "type": "urltest",
       "tag": "TW AUTO",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "31m0s",
       "tolerance": 50,
@@ -333,7 +333,7 @@
     {
       "type": "urltest",
       "tag": "SG AUTO",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "32m0s",
       "tolerance": 50,
@@ -342,7 +342,7 @@
     {
       "type": "urltest",
       "tag": "JP AUTO",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "33m0s",
       "tolerance": 50,
@@ -351,7 +351,7 @@
     {
       "type": "urltest",
       "tag": "US AUTO",
-      "outbounds": null,
+      "outbounds": [],
       "url": "https://www.gstatic.com/generate_204",
       "interval": "34m0s",
       "tolerance": 50,
@@ -459,42 +459,42 @@
     {
       "type": "bridge",
       "tag": "桥接"
-      }
+    }
   ],
-"route": {
+  "route": {
     "rules": [
       {"type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"preferred_by": ["桥接"]}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "outbound": "桥接"},
       {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
-      {"ip_is_private": true, "outbound": "直连"},
+      {"ip_is_private": true, "outbound": "DIRECT"},
       {"type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
       {"network": "icmp", "action": "resolve"},
-      {"network": "icmp", "outbound": "直连"},
-      {"clash_mode": "Direct", "outbound": "直连"},
+      {"network": "icmp", "outbound": "DIRECT"},
+      {"clash_mode": "Direct", "outbound": "DIRECT"},
       {"clash_mode": "Global", "outbound": "GLOBAL"},
-      {"rule_set": "geosite-private", "outbound": "直连"},
+      {"rule_set": "geosite-private", "outbound": "DIRECT"},
       {"rule_set": "geosite-category-ai-!cn", "outbound": "AI"},
       {"rule_set": "geosite-youtube", "outbound": "Youtube"},
       {"rule_set": "geosite-google", "outbound": "Google"},
-      {"rule_set": "geosite-github", "outbound": "Github"},
+      {"rule_set": "geosite-github", "outbound": "PROXY"},
       {"rule_set": "geosite-onedrive", "outbound": "OneDrive"},
-      {"rule_set": "geosite-microsoft@cn", "outbound": "直连"},
-      {"rule_set": "geosite-microsoft", "outbound": "Microsoft"},
-      {"rule_set": "geosite-apple@cn", "outbound": "直连"},
+      {"rule_set": "geosite-microsoft@cn", "outbound": "DIRECT"},
+      {"rule_set": "geosite-microsoft", "outbound": "PROXY"},
+      {"rule_set": "geosite-apple@cn", "outbound": "DIRECT"},
       {"rule_set": "geosite-apple", "outbound": "Apple"},
       {"rule_set": "geosite-telegram", "outbound": "Telegram"},
       {"rule_set": "geosite-tiktok", "outbound": "TikTok"},
-      {"rule_set": "geosite-netflix", "outbound": "Netflix"},
-      {"rule_set": "geosite-paypal", "outbound": "Wallet"},
-      {"rule_set": "geosite-binance", "outbound": "Wallet"},
-      {"rule_set": "geosite-okx", "outbound": "Wallet"},
-      {"rule_set": "geosite-category-cryptocurrency", "outbound": "Wallet"},
-      {"rule_set": "geosite-steam@cn", "outbound": "直连"},
-      {"rule_set": "geosite-steam", "outbound": "Steam"},
+      {"rule_set": "geosite-netflix", "outbound": "netflix"},
+      {"rule_set": "geosite-paypal", "outbound": "PROXY"},
+      {"rule_set": "geosite-binance", "outbound": "PROXY"},
+      {"rule_set": "geosite-okx", "outbound": "PROXY"},
+      {"rule_set": "geosite-category-cryptocurrency", "outbound": "PROXY"},
+      {"rule_set": "geosite-steam@cn", "outbound": "DIRECT"},
+      {"rule_set": "geosite-steam", "outbound": "PROXY"},
       {"rule_set": "geosite-geolocation-!cn", "outbound": "PROXY"},
       {"inbound": "mixed-in", "action": "resolve"},
       {"rule_set": "geoip-telegram", "outbound": "Telegram"},
-      {"rule_set": "geoip-cn", "outbound": "直连"}
+      {"rule_set": "geoip-cn", "outbound": "DIRECT"}
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
