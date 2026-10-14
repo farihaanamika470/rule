@@ -528,7 +528,6 @@
     }
   ],
   "route": {
-    "default_http_client": "dl-client",
     "rules": [
       {
         "ip_cidr": [
@@ -538,192 +537,112 @@
         "outbound": "ts-ep"
       },
       {
-        "action": "sniff",
-        "sniffer": [
-          "http",
-          "tls",
-          "quic",
-          "dns"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {"domain_suffix": "push.apple.com"},
+          {"rule_set": "geoip-telegram"}
         ],
-        "timeout": "500ms"
+        "invert": true,
+        "action": "sniff",
+        "sniffer": ["http", "tls", "stun", "quic", "dns"],
+        "timeout": "100ms"
       },
       {
         "type": "logical",
         "mode": "or",
-        "rules": [
-          {
-            "port": 53
-          },
-          {
-            "protocol": "dns"
-          }
-        ],
+        "rules": [{"port": 53}, {"protocol": "dns"}],
         "action": "hijack-dns"
       },
+      {"rule_set": "geosite-private", "outbound": "DIRECT"},
+      {"ip_is_private": true, "outbound": "DIRECT"},
       {
-        "rule_set": "private_domain",
-        "outbound": "DIRECT"
+        "type": "logical",
+        "mode": "or",
+        "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}],
+        "action": "reject",
+        "no_drop": true
       },
-      {
-        "ip_is_private": true,
-        "outbound": "DIRECT"
-      },
-      {
-        "clash_mode": "全局",
-        "outbound": "GLOBAL"
-      },
-      {
-        "clash_mode": "直连",
-        "outbound": "DIRECT"
-      },
-      {
-        "rule_set": "bilibili_domain",
-        "outbound": "bilibili"
-      },
-      {
-        "rule_set": "youtube_domain",
-        "outbound": "Youtube"
-      },
-      {
-        "rule_set": "openai_domain",
-        "outbound": "OpenAI"
-      },
-      {
-        "rule_set": "gemini_domain",
-        "outbound": "Gemini"
-      },
-      {
-        "rule_set": "claude_domain",
-        "outbound": "AI"
-      },
-      {
-        "rule_set": "copilot_domain",
-        "outbound": "AI"
-      },
-      {
-        "rule_set": "twitter_domain",
-        "outbound": "TWITTER"
-      },
-      {
-        "rule_set": "tiktok_domain",
-        "outbound": "TikTok"
-      },
-      {
-        "rule_set": "spotify_domain",
-        "outbound": "Spotify"
-      },
-      {
-        "rule_set": "onedrive_domain",
-        "outbound": "OneDrive"
-      },
-      {
-        "rule_set": "github_domain",
-        "outbound": "PROXY"
-      },
+      {"network": "icmp", "action": "resolve"},
+      {"network": "icmp", "outbound": "DIRECT"},
+      {"clash_mode": "Direct", "outbound": "DIRECT"},
+      {"clash_mode": "直连", "outbound": "DIRECT"},
+      {"clash_mode": "Global", "outbound": "GLOBAL"},
+      {"clash_mode": "全局", "outbound": "GLOBAL"},
+      {"inbound": "mixed-in", "action": "resolve"},
+      {"rule_set": "geosite-bilibili", "outbound": "bilibili"},
+      {"rule_set": "geosite-youtube", "outbound": "Youtube"},
+      {"rule_set": "geosite-openai", "outbound": "OpenAI"},
+      {"rule_set": "geosite-gemini", "outbound": "Gemini"},
+      {"rule_set": ["Claude", "Copilot"], "outbound": "AI"},
+      {"rule_set": "Twitter", "outbound": "TWITTER"},
+      {"rule_set": "TikTok", "outbound": "TikTok"},
+      {"rule_set": "Spotify", "outbound": "Spotify"},
+      {"rule_set": "OneDrive", "outbound": "OneDrive"},
+      {"rule_set": "geosite-github", "outbound": "PROXY"},
       {
         "type": "logical",
         "mode": "and",
         "rules": [
+          {"rule_set": ["geosite-geolocation-!cn", "geosite-category-porn"]},
           {
             "rule_set": [
-              "proxy_domain",
-              "category_porn"
-            ]
-          },
-          {
-            "rule_set": [
-              "cn_domain",
-              "apple_domain",
-              "google_domain",
-              "telegram_domain",
-              "netflix_domain",
-              "youtube_domain",
-              "openai_domain",
-              "gemini_domain",
-              "claude_domain",
-              "copilot_domain",
-              "twitter_domain",
-              "tiktok_domain"
+              "geosite-cn", "geosite-apple", "geosite-google", "geosite-telegram", 
+              "geosite-netflix", "geosite-youtube", "geosite-openai", "geosite-gemini",
+              "Claude", "Copilot", "Twitter", "TikTok"
             ],
             "invert": true
           }
         ],
         "outbound": "PROXY"
       },
-      {
-        "action": "resolve"
-      },
-      {
-        "rule_set": [
-          "telegram_ip",
-          "telegram_domain"
-        ],
-        "outbound": "Telegram"
-      },
-      {
-        "rule_set": [
-          "google_ip",
-          "google_domain"
-        ],
-        "outbound": "Google"
-      },
-      {
-        "rule_set": [
-          "netflix_ip",
-          "netflix_domain"
-        ],
-        "outbound": "netflix"
-      },
+      {"rule_set": ["geoip-telegram", "geosite-telegram"], "outbound": "Telegram"},
+      {"rule_set": ["geoip-google", "geosite-google"], "outbound": "Google"},
+      {"rule_set": ["geoip-netflix", "geosite-netflix"], "outbound": "netflix"},
+      {"rule_set": ["geoip-apple", "geosite-apple"], "outbound": "Apple"},
       {
         "type": "logical",
         "mode": "and",
         "rules": [
-          {
-            "rule_set": [
-              "cloudflare_ip",
-              "cloudflare_domain"
-            ]
-          },
-          {
-            "rule_set": [
-              "openai_domain",
-              "claude_domain",
-              "copilot_domain",
-              "twitter_domain"
-            ],
-            "invert": true
-          }
+          {"rule_set": ["geoip-cloudflare", "geosite-cloudflare"]},
+          {"rule_set": ["geosite-openai", "Claude", "Copilot", "Twitter"], "invert": true}
         ],
         "outbound": "CF优选"
       },
-      {
-        "rule_set": [
-          "apple_ip",
-          "apple_domain"
-        ],
-        "outbound": "Apple"
-      },
-      {
-        "rule_set": "geoip-cn",
-        "outbound": "CN"
-      },
-      {
-        "rule_set": [
-          "cn_ip",
-          "cn_domain"
-        ],
-        "outbound": "CN"
-      }
+      {"rule_set": "geoip-cn", "outbound": "CN"},
+      {"rule_set": "geosite-cn", "outbound": "CN"}
     ],
     "rule_set": [
-      {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn","geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-netflix", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
-      {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"},
-      {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"}
+      {
+        "tag": [
+          "geosite-private", "geosite-apple", "geosite-bilibili", "geosite-cn", 
+          "geosite-google", "geosite-netflix", "geosite-github", "geosite-cloudflare", 
+          "geosite-telegram", "geosite-youtube", "geosite-openai", "geosite-gemini", 
+          "geosite-category-porn", "geosite-geolocation-!cn"
+        ],
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"
+      },
+      {
+        "tag": [
+          "geoip-cn", "geoip-google", "geoip-telegram", "geoip-netflix", 
+          "geoip-apple", "geoip-cloudflare"
+        ],
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/{tag}.srs"
+      },
+      {
+        "tag": ["Claude", "Copilot", "Twitter", "TikTok", "Spotify", "OneDrive"],
+        "type": "remote",
+        "format": "binary",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/{tag}/{tag}.srs"
+      }
     ],
     "default_http_client": "dl-client",
     "auto_detect_interface": true,
-    "default_domain_resolver": "ali",
+    "default_domain_resolver": {"server": "ali"},
     "final": "Final"
   },
   "services": [
