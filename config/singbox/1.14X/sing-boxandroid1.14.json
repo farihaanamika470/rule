@@ -64,8 +64,16 @@
         "server": "local"
       },
       {
+        "clash_mode": "Direct",
+        "server": "ali"
+      },
+      {
         "clash_mode": "直连",
         "server": "ali"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "fakeip"
       },
       {
         "clash_mode": "全局",
@@ -87,32 +95,35 @@
       },
       {
         "rule_set": [
-          "apple-domain",
-          "cn_domain",
-          "bilibili-domain"
+          "geosite-apple",
+          "geosite-cn",
+          "geosite-bilibili"
         ],
         "server": "ali"
       },
       {
         "rule_set": [
-          "google-domain",
-          "youtube-domain",
-          "proxy-domain",
-          "category-porn"
+          "geosite-google",
+          "geosite-youtube",
+          "geosite-geolocation-!cn",
+          "geosite-category-porn"
         ],
         "server": "googleDNS"
       },
       {
         "rule_set": [
-          "openai-domain",
-          "cloudflare-domain",
-          "claude-domain",
-          "copilot-domain",
-          "twitter-domain",
-          "telegram-domain"
+          "geosite-openai",
+          "geosite-cloudflare",
+          "Claude",
+          "Copilot",
+          "Twitter",
+          "geosite-telegram"
         ],
         "server": "cfDNS"
       }
+    ],
+    "final": "cfDNS"
+  }
     ],
     "final": "cfDNS"
   },
