@@ -455,7 +455,8 @@
     {
       "type": "direct",
       "tag": "DIRECT"
-    }
+    }，
+    {"tag": "桥接","type": "bridge"}
   ],
 "route": {
     "rules": [
