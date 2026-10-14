@@ -123,9 +123,6 @@
       }
     ],
     "final": "cfDNS"
-  }
-    ],
-    "final": "cfDNS"
   },
   "inbounds": [
     {
